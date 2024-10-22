@@ -10,24 +10,38 @@
 <body>
   <script>
     // while
-    let i = 0
-
+    // let i = 0
+    // while (i < 6) {
+    //   console.log(i)
+    //   i += 1
+    // }
 
     // for
-
+    for (let index = 1; index < 6; index++) {
+      console.log(index)      
+    }
 
     // for...in
     const object = {
       a: 'apple',
       b: 'banana'
     }
-
+    for (const key in object) {
+      console.log(key) 
+      console.log(object[key])
+    }
+    
 
     // for...of
     const numbers = [0, 1, 2, 3]
+    for (const number of numbers) {
+        console.log(number)
+    }
+    numbers.forEach(element => {
+      console.log(element)
+    });
 
-
-    const myStr = 'apple'
+    // const myStr = 'apple'
 
 
 
@@ -41,6 +55,9 @@
     for (const i of arr) {
       console.log(i) // a, b, c
     }
+
+
+
   </script>
 </body>
 
