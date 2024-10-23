@@ -9,38 +9,44 @@
 
 <body>
   <script>
-    console.log(add(12313,23132))
+    // console.log(add(12313,23132))
   
-    function add(num1,num2){
-      return num1 + num2
+    // function add(num1,num2){
+    //   return num1 + num2
+    // }
+
+    // const sub = function(num1,num2){
+    //   return num1 - num2
+    // }
+
+    // console.log(add(1,2))
+    // console.log(sub(2,1))
+
+    // const students = [
+    //   { name: 'Alice', scores: [85, 90, 95] },
+    //   { name: 'Bella', scores: [50, 80, 80] },
+    //   { name: 'Caley', scores: [90, 55, 35] },
+    //   { name: 'Dave', scores: [100, 100, 100] },
+    //   { name: 'Eve', scores: [88, 90, 92] }
+    // ]
+
+    // console.log(students[1].scores)
+    // const makeAvgScores3 = (student) => {
+    //   const name = student.name;
+    //   const sum = student.scores.reduce((sum, score) => sum + score, 0);
+    //   const avg = sum / student.scores.length;
+    //   return `${name}: ${avg}`;
+    // };
+
+    // const result = makeAvgScores3(students)
+    // console.log(result)
+    const person = {
+      name : 'Alice',
+      greeting : function () {
+        return `Hello my name is ${this.name}`
+      },
     }
-
-    const sub = function(num1,num2){
-      return num1 - num2
-    }
-
-    console.log(add(1,2))
-    console.log(sub(2,1))
-
-    const students = [
-      { name: 'Alice', scores: [85, 90, 95] },
-      { name: 'Bella', scores: [50, 80, 80] },
-      { name: 'Caley', scores: [90, 55, 35] },
-      { name: 'Dave', scores: [100, 100, 100] },
-      { name: 'Eve', scores: [88, 90, 92] }
-    ]
-
-    console.log(students[1].scores)
-    const makeAvgScores3 = (student) => {
-      const name = student.name;
-      const sum = student.scores.reduce((sum, score) => sum + score, 0);
-      const avg = sum / student.scores.length;
-      return `${name}: ${avg}`;
-    };
-
-    const result = makeAvgScores3(students)
-    console.log(result)
-
+    console.log(person.greeting())
   </script>
 </body>
 
