@@ -39,14 +39,29 @@
     // };
 
     // const result = makeAvgScores3(students)
-    // console.log(result)
-    const person = {
-      name : 'Alice',
-      greeting : function () {
-        return `Hello my name is ${this.name}`
-      },
+    function printInfo({ name, age, city }) {
+      console.log(`이름: ${name}, 나이: ${age}, 도시: ${city}`)
     }
-    console.log(person.greeting())
+
+    const person = {
+      name: 'Bob',
+      age: 35,
+      city: 'London',
+    }
+
+    printInfo(person)
+    const obj = { b: 2, c: 3, d: 4 }
+    const newObj = {a:1, obj, e:5}
+    console.log(newObj) // {a: 1, b: 2, c: 3, d: 4, e: 5}
+
+
+    const profile = {
+      name: 'Alice',
+      age: 30
+    }
+
+    console.log(Object.keys(profile)) // ['name', 'age']
+    console.log(Object.values(profile)) // ['Alice', 30]
   </script>
 </body>
 

@@ -12,38 +12,40 @@
     // Method & this 예시
     const person = {
       name: 'Alice',
-      greeting: function () { },
+      greeting: function () { 
+        return `Hello my name is ${this.name}`
+      },
     }
 
-    console.log(person.greeting()) // Hello my name is Alice
+    // console.log(person.greeting()) // Hello my name is Alice
 
 
     // 1.1 단순 호출 시 this
-    const myFunc = function () {
-      return this
-    }
-    console.log(myFunc()) // ??
+    // const myFunc = function () {
+    //   return this
+    // }
+    // console.log(myFunc()) // ??
 
     // 1.2 메서드 호출 시 this
-    const myObj = {
-      data: 1,
-      myFunc: function () {
-        return this
-      }
-    }
-    console.log(myObj.myFunc()) // ??
+    // const myObj = {
+    //   data: 1,
+    //   myFunc: function () {
+    //     return this
+    //   } 
+    // }
+    // console.log(myObj.myFunc()) // ??
 
     // 2. 중첩된 함수에서의 this
     // 2.1 일반 함수
-    const myObj2 = {
-      numbers: [1, 2, 3],
-      myFunc: function () {
-        this.numbers.forEach(function (number) {
-          console.log(this) // ??
-        })
-      }
-    }
-    console.log(myObj2.myFunc())
+    // const myObj2 = {
+    //   numbers: [1, 2, 3],
+    //   myFunc: function () {
+    //     this.numbers.forEach(function (number) {
+    //       console.log(this) // ??
+    //     })
+    //   }
+    // }
+    // console.log(myObj2.myFunc())
 
     // 2.2 화살표 함수
     const myObj3 = {
