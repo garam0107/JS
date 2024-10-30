@@ -8,15 +8,16 @@
 <body>
   <h1>{{ person.username }}의 프로필</h1>
   <div>
-    팔로잉 : {{ person.followings.all|length }} / 팔로워 : {{ person.followers.all|length }}
+    팔로잉 : <span id = "followings-count">{{ person.followings.all|length }}</span> 
+    / 팔로워 : <span id = "followers-count">{{ person.followers.all|length }}</span>
   </div>
 
   {% if request.user != person %}
     <div>
-      <form action="{% url "accounts:follow" person.pk %}" method="POST">
+      <form id = "follow-form" data-user-id ="{{ person.pk }}">
         {% csrf_token %}
         {% if request.user in person.followers.all %}
-          <input type="submit" value="언팔로우">
+          <input type="submit" value="언팔로우" class = "follow-input">
         {% else %}
           <input type="submit" value="팔로우">
         {% endif %}
@@ -47,5 +48,51 @@
   {% endfor %}
 
   <a href="{% url "articles:index" %}">[back]</a>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    // 1. 팔로우 버튼 선택
+    const formTag = document.querySelector('#follow-form')
+    // 6. csrf_token 선택
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+    // 2. 팔로우 버튼에 submit 이벤트 할당
+    formTag.addEventListener('submit', function(event) {
+      // 3. submit 이벤트의 기본 동작 취소
+      event.preventDefault()
+      // 5. HTML에서 준비한 user의 pk를 조회(event,this,변수 자체를 활용하는 방법 3가지)
+    
+      const userId = event.currentTarget.dataset.userId
+      // const userPk = this
+      // const userPk = formTag.
+      // 4. axios 요청을 위한 코드 작성
+      axios({
+        method : 'post',
+        url : `/accounts/${userId}/follow/`,
+        // 7. 선택한 csrf_token 값을 요청 headers에 세팅
+        headers: {'X-CSRFToken': csrftoken},
+      })
+        .then((response) => {
+          console.log(response)
+          console.log(response.data)
+          const isFollowed = response.data.is_followed
+          const followBtn = document.querySelector('.follow-input')
+          if(isFollowed === true){
+            followBtn.value = '언팔로우'
+
+          }else{
+            followBtn.value = '팔로우'
+          }
+          const followingsCnt = document.querySelector('#followings-count') 
+          const followersCnt = document.querySelector('#followers-count')
+
+          followingsCnt.textContent = response.data.followings_count
+          followersCnt.textContent = response.data.followers_count
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+
+    })
+  </script>
 </body>
 </html>

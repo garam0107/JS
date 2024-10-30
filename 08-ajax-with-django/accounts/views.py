@@ -5,7 +5,7 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth.decorators import login_required
 from .forms import CustomUserCreationForm, CustomUserChangeForm
-
+from django.http import JsonResponse
 
 # Create your views here.
 def login(request):
@@ -101,12 +101,18 @@ def follow(request, user_pk):
     User = get_user_model()
     you = User.objects.get(pk=user_pk)
     me = request.user
-
+    # JS에게 팔로우 상태여부를 전달할 데이터 작성(JSON 데이터로 응답하도록 변경)
     if me != you:
         if me in you.followers.all():
             you.followers.remove(me)
-            # me.followings.remove(you)
+            is_followed = False
         else:
             you.followers.add(me)
-            # me.followings.add(you)
+            is_followed = True
+        context = {
+            'is_followed' : is_followed,
+            'followings_count' : you.followings.count(),
+            'followers_count' : you.followers.count(),
+        }
+        return JsonResponse(context)    
     return redirect('accounts:profile', you.username)

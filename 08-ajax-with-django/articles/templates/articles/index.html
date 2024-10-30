@@ -27,7 +27,7 @@
     <a href="{% url "accounts:signup" %}">회원가입</a>
   {% endif %}
 
-  
+<article class = "article-container">
   {% for article in articles %}
     <a href="{% url "accounts:profile" article.user.username %}">
       <p>작성자: {{ article.user.username }}</p>
@@ -38,16 +38,49 @@
     </a>
     <p>글 내용: {{ article.content }}</p>
     {% comment %} 좋아요 form 버튼 {% endcomment %}
-    <form action="{% url "articles:likes" article.pk %}" method="POST">
+    <form data-article-id = "{{article.pk}}">
       {% csrf_token %}
       {% if request.user in article.like_users.all %}
-        <input type="submit" value="좋아요 취소">
+        <input type="submit" value="좋아요 취소" id = "like-{{article.pk}}">
       {% else %}
-        <input type="submit" value="좋아요">
+        <input type="submit" value="좋아요" id = "like-{{article.pk}}">
       {% endif %}
     </form>
     <hr>
   {% endfor %}
+</article>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    const articleTag = document.querySelector('.article-container')
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+    
+    articleTag.addEventListener('submit', function(event) {
+      event.preventDefault()
+      const articleId = event.target.dataset.articleId
+      axios({
+        method : 'post',
+        url : `/articles/${articleId}/likes/`,
+        headers: {'X-CSRFToken': csrftoken},
+      })
+        .then((response) =>{
+          console.log(response)
+          const isLike = response.data.is_like
+          const likeBtn = document.querySelector(`#like-${articleId}`)
+          if (isLike === true){
+            likeBtn.value = '좋아요 취소'
+          }else {
+            likeBtn.value = '좋아요'
+          }
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    })
+
+
+
+  </script>
+
 
 </body>
 </html>
